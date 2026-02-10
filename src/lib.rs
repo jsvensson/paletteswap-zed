@@ -1,4 +1,4 @@
-use zed_extension_api as zed;
+use zed_extension_api::{self as zed, LanguageServerId, Worktree};
 
 struct PaletteSwapExtension;
 
@@ -9,9 +9,9 @@ impl zed::Extension for PaletteSwapExtension {
 
     fn language_server_command(
         &mut self,
-        _language_server_id: &zed::LanguageServerId,
-        _worktree: &zed::Worktree,
-    ) -> Result<zed::Command> {
+        _language_server_id: &LanguageServerId,
+        _worktree: &Worktree,
+    ) -> zed::Result<zed::Command> {
         Ok(zed::Command {
             command: "pstheme-lsp".to_string(),
             args: vec![],
