@@ -1,0 +1,7 @@
+meta {
+  name = "Minimal"
+}
+
+palette {
+  base = "#000000"
+}

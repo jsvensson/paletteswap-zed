@@ -1,0 +1,39 @@
+meta {
+  name       = "Test Theme"
+  author     = "Test Author"
+  appearance = "dark"
+}
+
+palette {
+  base    = "#191724"
+  surface = "#1f1d2e"
+  text    = "#e0def4"
+  accent  = "#eb6f92"
+
+  highlight {
+    low  = "#21202e"
+    mid  = "#403d52"
+    high = "#524f67"
+  }
+}
+
+theme {
+  background = palette.base
+  foreground = palette.text
+  cursor     = palette.highlight.high
+}
+
+syntax {
+  keyword = palette.accent
+  string  = "#f6c177"
+
+  comment {
+    color  = palette.surface
+    italic = true
+  }
+}
+
+ansi {
+  black = palette.surface
+  red   = palette.accent
+}
