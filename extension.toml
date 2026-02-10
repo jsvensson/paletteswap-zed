@@ -1,0 +1,15 @@
+id = "paletteswap-theme"
+name = "PaletteSwap Theme"
+version = "0.1.0"
+schema_version = 1
+authors = ["Your Name <you@example.com>"]
+description = "Syntax highlighting and LSP support for PaletteSwap .pstheme files"
+repository = "https://github.com/jsvensson/paletteswap-zed"
+
+[grammars.hcl]
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-hcl"
+rev = "e936d3fef8bacf23f0f243b5a8d405b2714d6ff8"
+
+[language_servers.pstheme-lsp]
+name = "PaletteSwap LSP"
+languages = ["PaletteSwap Theme"]
