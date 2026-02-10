@@ -1,0 +1,5 @@
+name = "PaletteSwap Theme"
+grammar = "hcl"
+path_suffixes = ["pstheme"]
+line_comments = ["# "]
+tab_size = 2
