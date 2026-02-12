@@ -1,5 +1,5 @@
-id = "paletteswap-theme"
-name = "PaletteSwap Theme"
+id = "paletteswap"
+name = "PaletteSwap"
 version = "0.2.0"
 schema_version = 1
 authors = ["Johan Svensson <johan@spiralmind.io>"]
