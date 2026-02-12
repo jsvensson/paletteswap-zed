@@ -27,6 +27,14 @@
 (block
   (identifier) @type)
 
+; Variable expressions (namespaces like 'palette' in 'palette.base')
+(variable_expr
+  (identifier) @namespace)
+
+; Attribute access (properties like 'base', 'text' in 'palette.base')
+(get_attr
+  (identifier) @property)
+
 ; Operators
 ("=") @operator
 ("{") @punctuation.bracket
