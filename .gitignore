@@ -1,1 +1,4 @@
 .worktrees/
+/target/
+**/*.wasm
+grammars/*.wasm
