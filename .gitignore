@@ -2,3 +2,4 @@
 /target/
 /grammars/*
 **/*.wasm
+/pstheme-lsp
