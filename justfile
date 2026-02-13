@@ -1,7 +1,8 @@
-# Remove all generated .wasm files and the cargo target directory
+# Remove all generated .wasm files, downloaded LSP binary, and the cargo target directory
 clean:
     rm -rf target/
     rm -rf grammars/hcl/
+    rm -f pstheme-lsp .update-state
     find . -name '*.wasm' -not -path './.git/*' -delete
 
 # Build the extension WASM binary
