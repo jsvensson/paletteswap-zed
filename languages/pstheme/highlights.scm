@@ -14,10 +14,9 @@
   (template_literal) @string.special
   (#match? @string.special "^#[0-9a-fA-F]{6}$"))
 
-; Function calls - brighten()
+; Function calls
 (function_call
-  (identifier) @function
-  (#match? @function "^brighten$"))
+  (identifier) @function)
 
 ; Attribute names
 (attribute
