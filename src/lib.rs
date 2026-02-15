@@ -31,9 +31,9 @@ impl PaletteSwapExtension {
     }
 
     fn get_binary_path(&self) -> zed::Result<String> {
-        // Check if binary already exists in extension's working directory
-        let binary_path = BINARY_NAME.to_string();
+        let binary_path = format!("{BINARY_NAME}/{BINARY_NAME}");
 
+        // Check if binary already exists in extension's working directory
         if std::fs::metadata(&binary_path).is_ok() {
             return Ok(binary_path);
         }
@@ -56,22 +56,18 @@ impl PaletteSwapExtension {
             .find(|a| a.name == asset_name)
             .ok_or_else(|| format!("Asset {} not found in release", asset_name))?;
 
-        // Download the asset
+        // Download and extract into a directory named after the binary
         let file_type = if asset_name.ends_with(".zip") {
             zed::DownloadedFileType::Zip
         } else {
             zed::DownloadedFileType::GzipTar
         };
 
-        zed::download_file(&asset.download_url, &asset_name, file_type)
+        zed::download_file(&asset.download_url, BINARY_NAME, file_type)
             .map_err(|e| format!("Failed to download asset: {}", e))?;
 
-        // Make it executable on Unix systems
-        #[cfg(unix)]
-        {
-            zed::make_file_executable(&binary_path)
-                .map_err(|e| format!("Failed to make binary executable: {}", e))?;
-        }
+        zed::make_file_executable(&binary_path)
+            .map_err(|e| format!("Failed to make binary executable: {}", e))?;
 
         Ok(binary_path)
     }
