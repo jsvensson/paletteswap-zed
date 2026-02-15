@@ -1,8 +1,11 @@
+zed_ext_work_dir := env("HOME") / "Library/Application Support/Zed/extensions/work/paletteswap"
+
 # Remove all generated .wasm files, downloaded LSP binary, and the cargo target directory
 clean:
     rm -rf target/
     rm -rf grammars/hcl/
     rm -rf pstheme-lsp/ .update-state
+    rm -rf "{{ zed_ext_work_dir }}/pstheme-lsp"
     find . -name '*.wasm' -not -path './.git/*' -delete
 
 # Build the extension WASM binary
