@@ -30,13 +30,21 @@ impl PaletteSwapExtension {
         Ok(format!("paletteswap_{}_{}.{}", os_name, arch_name, ext))
     }
 
-    fn get_binary_path(&self) -> zed::Result<String> {
+    fn get_binary_path(
+        &self,
+        language_server_id: &LanguageServerId,
+    ) -> zed::Result<String> {
         let binary_path = format!("{BINARY_NAME}/{BINARY_NAME}");
 
         // Check if binary already exists in extension's working directory
         if std::fs::metadata(&binary_path).is_ok() {
             return Ok(binary_path);
         }
+
+        zed::set_language_server_installation_status(
+            language_server_id,
+            &zed::LanguageServerInstallationStatus::CheckingForUpdate,
+        );
 
         // Get latest release
         let release = zed::latest_github_release(
@@ -55,6 +63,11 @@ impl PaletteSwapExtension {
             .iter()
             .find(|a| a.name == asset_name)
             .ok_or_else(|| format!("Asset {} not found in release", asset_name))?;
+
+        zed::set_language_server_installation_status(
+            language_server_id,
+            &zed::LanguageServerInstallationStatus::Downloading,
+        );
 
         // Download and extract into a directory named after the binary
         let file_type = if asset_name.ends_with(".zip") {
@@ -80,10 +93,10 @@ impl zed::Extension for PaletteSwapExtension {
 
     fn language_server_command(
         &mut self,
-        _language_server_id: &LanguageServerId,
+        language_server_id: &LanguageServerId,
         _worktree: &Worktree,
     ) -> zed::Result<zed::Command> {
-        let binary_path = self.get_binary_path()?;
+        let binary_path = self.get_binary_path(language_server_id)?;
 
         Ok(zed::Command {
             command: binary_path,
