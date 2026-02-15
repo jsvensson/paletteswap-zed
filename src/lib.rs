@@ -30,11 +30,11 @@ impl PaletteSwapExtension {
         Ok(format!("paletteswap_{}_{}.{}", os_name, arch_name, ext))
     }
 
-    fn get_binary_path(&self, worktree: &Worktree) -> zed::Result<String> {
+    fn get_binary_path(&self) -> zed::Result<String> {
         // Check if binary already exists in extension's working directory
-        let binary_path = format!("{}/{}", worktree.root_path(), BINARY_NAME);
+        let binary_path = BINARY_NAME.to_string();
 
-        if std::path::Path::new(&binary_path).exists() {
+        if std::fs::metadata(&binary_path).is_ok() {
             return Ok(binary_path);
         }
 
@@ -66,7 +66,6 @@ impl PaletteSwapExtension {
         zed::download_file(&asset.download_url, &asset_name, file_type)
             .map_err(|e| format!("Failed to download asset: {}", e))?;
 
-        // The binary should now be extracted at the root of the worktree
         // Make it executable on Unix systems
         #[cfg(unix)]
         {
@@ -86,9 +85,9 @@ impl zed::Extension for PaletteSwapExtension {
     fn language_server_command(
         &mut self,
         _language_server_id: &LanguageServerId,
-        worktree: &Worktree,
+        _worktree: &Worktree,
     ) -> zed::Result<zed::Command> {
-        let binary_path = self.get_binary_path(worktree)?;
+        let binary_path = self.get_binary_path()?;
 
         Ok(zed::Command {
             command: binary_path,
